@@ -1,0 +1,14 @@
+{
+  "name": "shopping_cart_qantas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./webserver/server.js",
+    "dev": "nodemon ./webserver/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
