@@ -1,43 +1,18 @@
 let LineItem = module.exports = {}
 const {Line_Items, Products} = require('../db/DB')
-
-let _validate = async (payload) => {
-  let {
-    product_id,
-    quantity
-  } = payload
-  let errorMessages = []
-  let isValid = true
-
-  let product = await Products.find(el => el.id === product_id)
-
-  if (!product) {
-    isValid = false
-    errorMessages.push('no product found')
-  }
-
-  if (typeof quantity !== 'number') {
-    isValid = false
-    errorMessages.push('quantity must be a number')
-  }
-
-  if (quantity < 1) {
-    isValid = false
-    errorMessages.push('quantity must be greater than 1')
-  }
-
-  return {
-    isValid,
-    errorMessages
-  }
-}
+let wrapper = require('../util/wrapper')
+let validateLineItem = require('./validation/validateLineItem')
 
 LineItem.create = async (payload) => {
   let { product_id, quantity } = payload
 
-  // Catch validation error
-  let validation = await _validate(payload)
-  if (!validation.isValid) return Promise.reject(validation.errorMessages)
+  // Check JSON validation schema
+  let validation = validateLineItem(payload)
+  if (validation.error) return Promise.reject(validation.error.details)
+
+  // Check if product exists
+  let product = await Products.find(el => el.id === product_id)
+  if (!product) return Promise.reject('no product found')
 
   // Create new lineItem and return from DB
   let lineItemId = Line_Items[Line_Items.length - 1].id
@@ -47,6 +22,7 @@ LineItem.create = async (payload) => {
     product_id,
     quantity
   }
+  
   await Line_Items.push(newLineItem)
   let result = await LineItem.findById(newLineItem.id)
   return Promise.resolve(result)
@@ -57,34 +33,36 @@ LineItem.find = () => {
 }
 
 LineItem.findById = async (id) => {
-  // Fetch lineitem and associated product
-  let lineItem = await Line_Items.find(el => el.id === id)
-  if (!lineItem) return Promise.reject('No line item found')
-  
-  let lineItemProduct = await Products.find(el => el.id === lineItem.product_id)
-  if (!lineItemProduct) return Promise.reject('No line item assoc product found')
+  // Fetch lineitem
+  const lineItem = await Promise.resolve(Line_Items.find(el => el.id === id))
+  if (!lineItem) return Promise.reject('no line item found')
 
-  // Join, serialize and return
-  let lineItemJoin = {...lineItem, product: lineItemProduct}
-  return Promise.resolve(_serialize(lineItemJoin))
+  // Fetch lineItem products
+  let productId = lineItem && lineItem.product_id
+  let product = Products.find(el => el.id === productId) || null
+
+  let lineItemWithProduct = {...lineItem, product}
+  return Promise.resolve(lineItemWithProduct)
 }
 
-let _serialize = (data) => {
-  let {id, product_id, cart_id, quantity, product} = data
-  return {
-    id,
-    productId: product_id,
-    cartId: cart_id,
-    qty: quantity,
-    // relational join
-    product
-    // computed 
-  }
+
+// Using a wrapper to fail safely
+const getLineItem = async (id) => {
+  const {error, data } = await wrapper(LineItem.findById(id))
+  // able to catch errors
+  if (error) return error
+  return data
 }
 
-// let payload = {
-//   product_id: 0,
-//   quantity: 1
-// }
-// let x = LineItem.create(payload)
-// x
+let payload = {
+  quantity: -1,
+  product_id: 'abc'
+}
+
+LineItem.create(payload)
+  .then(data => {
+    data
+  })
+  .catch(err => {
+    err
+  })
