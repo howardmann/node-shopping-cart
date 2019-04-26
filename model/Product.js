@@ -32,8 +32,6 @@ Product.findById = (id) => {
   return Promise.resolve(product)
 }
 
-
-
 // let payload = {
 //   description: 1,
 //   price: -1
