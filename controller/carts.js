@@ -14,6 +14,7 @@ Carts.create = () => {
 
 Carts.findById = (id) => {
   return Cart.findById(id).then(data => {
+    // Find associated lineItem product names
     return data
   })
 }

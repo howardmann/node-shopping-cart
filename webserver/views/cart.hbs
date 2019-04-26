@@ -1,0 +1,20 @@
+<p>Cart</p>
+
+{{#each lineItems}}
+  <ul>
+    <li>Item: {{product.description}}</li>
+    <li>Price: {{product.price}} </li>
+    <li>Quantity: {{quantity}} </li>
+    <li>Subtotal: {{subTotal}}</li>
+  </ul>
+  <form action="/carts/add/{{product.id}}" method="POST">
+    <input type="submit" value="ADD"></input>
+  </form>
+
+  <form action="/carts/deduct/{{product.id}}" method="POST">
+    <input type="submit" value="DEDUCT"></input>
+  </form>
+
+
+{{/each}}
+

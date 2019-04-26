@@ -41,7 +41,7 @@ util // Shared util helpers
 - [x] Line_Items CRUD
 - [x] Carts CRUD
 - [x] Web interface - Products Index
-- [ ] Web interface - Cart (add and remove items)
+- [x] Web interface - Cart (add and remove items)
 - [ ] Web sessions for Cart
 - [ ] Orders CRUD
 - [ ] Web interface - Orders checkout

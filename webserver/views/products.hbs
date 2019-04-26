@@ -5,5 +5,10 @@
   <li>id: {{id}}</li>
   <li>name: {{name}}</li>
   <li>price: {{price}}</li>
+  <form action="/carts/add/{{id}}" method="POST">
+      <input type="submit" value="ADD"></input>
+  </form>
+  
+  <button>Remove</button>
 </ul>
 {{/each}}

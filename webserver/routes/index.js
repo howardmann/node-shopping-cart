@@ -3,10 +3,13 @@ const router = express.Router()
 
 // require routes
 const products = require('./products')
+const carts = require('./carts')
 
-// products pages
 router
   .get('/products', products.index)
   .get('/products/:id', products.show)
+  .get('/carts/:id', carts.show)
+  .post('/carts/add/:product_id', carts.addToBasket)
+  .post('/carts/deduct/:product_id', carts.deductItem)
 
 module.exports = router

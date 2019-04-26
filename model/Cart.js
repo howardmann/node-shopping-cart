@@ -36,10 +36,13 @@ Cart.findById = async (id) => {
 
   // Fetch cart lineItems
   let lineItems = await LineItem.find().then(result => result.filter(el => el.cart_id === cart.id))
+  let lineItemsWithProduct = await Promise.all(lineItems.map(item => {
+    return LineItem.findById(item.id)
+  }))
 
   let cartWithLineItems = {
     ...cart,
-    lineItems
+    lineItems: lineItemsWithProduct
   }
   
   return Promise.resolve(cartWithLineItems)

@@ -43,9 +43,15 @@ LineItem.findById = async (id) => {
   let productId = lineItem && lineItem.product_id
   let product = Products.find(el => el.id === productId) || null
 
-  let lineItemWithProduct = {...lineItem, product}
+  let lineItemWithProduct = {
+    ...lineItem, 
+    product,
+    subTotal: lineItem.quantity * product.price // computed property
+  } 
   return Promise.resolve(lineItemWithProduct)
 }
+
+
 
 LineItem.update = async (id, payload) => {
   let { product_id, cart_id, quantity } = payload
