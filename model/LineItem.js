@@ -87,7 +87,6 @@ LineItem.update = async (id, payload) => {
 
 LineItem.destroy = (id) => {
   Line_Items = Line_Items.filter(el => el.id !== id)
-  console.log('banana', Line_Items)
   return Promise.resolve(Line_Items)
 }
 

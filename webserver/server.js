@@ -1,5 +1,17 @@
 const express = require('express')
+const session = require('express-session')
 const app = express()
+
+// Express sessions
+app.use(session({
+  secret: '42'
+}))
+
+// Access sessions in all templates
+app.use(function (req, res, next) {
+  res.locals.cart = req.session.cart; // This is the important line
+  next();
+});
 
 // View template engine
 const exphbs = require('express-handlebars');
@@ -10,6 +22,7 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 app.set('views', './webserver/views');
 
+// Routes
 const routes = require('./routes')
 app.use(routes)
 

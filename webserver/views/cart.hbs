@@ -1,6 +1,6 @@
-<p>Cart</p>
+<p>Cart: {{data.id}}</p>
 
-{{#each lineItems}}
+{{#each data.lineItems}}
   <ul>
     <li>Item: {{product.description}}</li>
     <li>Price: {{product.price}} </li>

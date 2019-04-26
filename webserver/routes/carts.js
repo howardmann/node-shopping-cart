@@ -3,38 +3,39 @@ const CartsRoutes = module.exports = {}
 // Require controllers
 const carts = require('../../controller/carts')
 
+CartsRoutes.show = async (req, res, next) => {
+  // access cart from session
+  let cart = req.session.cart || await carts.create()
 
-//TODO: USE SESSIONS
-const CART_ID = 1
-
-
-CartsRoutes.show = (req, res, next) => {
-  let id = Number(req.params.id)
-  carts.findById(id)
+  carts.findById(cart.id)  
     .then(data => {
-      res.render('cart', {
-        lineItems: data.lineItems
-      })
+      req.session.cart = data
+      res.render('cart', {data})
     })
 }
 
-CartsRoutes.addToBasket = (req, res, next) => {
+CartsRoutes.addToBasket = async (req, res, next) => {
   let product_id = Number(req.params.product_id)
-  let cart_id = CART_ID
+  // access cart from session
+  let cart = req.session.cart || await carts.create()
+  let cart_id = cart.id
 
   carts.updateQuantity({product_id, cart_id, action: 'ADD'})
-    .then(() => {
-      res.redirect(`/carts/${cart_id}`)
+    .then(data => {
+      req.session.cart = data
+      res.redirect(`/carts/`)
     })
 }
 
-CartsRoutes.deductItem = (req, res, next) => {
+CartsRoutes.deductItem = async (req, res, next) => {
   let product_id = Number(req.params.product_id)
-  let cart_id = CART_ID
+  let cart = req.session.cart || await carts.create()
+  let cart_id = cart.id
 
   carts.updateQuantity({product_id, cart_id, action: 'DEDUCT'})
-    .then(() => {
-      res.redirect(`/carts/${cart_id}`)
+    .then(data => {
+      req.session.cart = data
+      res.redirect(`/carts/`)
     })
 }
 
