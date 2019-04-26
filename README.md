@@ -39,10 +39,10 @@ util // Shared util helpers
 - [x] Model validation with JOI
 - [x] Products CRUD
 - [x] Line_Items CRUD
-- [ ] Carts CRUD
-- [ ] Orders CRUD
-- [ ] Web interface - Products Index
+- [x] Carts CRUD
+- [x] Web interface - Products Index
 - [ ] Web interface - Cart (add and remove items)
 - [ ] Web sessions for Cart
+- [ ] Orders CRUD
 - [ ] Web interface - Orders checkout
 

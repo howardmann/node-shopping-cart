@@ -4,7 +4,11 @@ const ProductsRoutes = module.exports = {}
 const products = require('../../controller/products')
 
 ProductsRoutes.index = (req, res, next) => {
-  products.list().then(data => res.send(data))
+  products.list().then(data => {
+    res.render('products',{
+      products: data
+    })
+  })
 }
 
 ProductsRoutes.show = (req, res, next) => {

@@ -1,11 +1,11 @@
 let LineItem = module.exports = {}
-const {Line_Items, Products, Carts} = require('../db/DB')
+let {Line_Items, Products, Carts} = require('../db/DB')
 let wrapper = require('../util/wrapper')
 let {validateLineItemCreate, validateLineItemUpdate} = require('./validation/validateLineItem')
 
 
 LineItem.create = async (payload) => {
-  let { product_id, cart_id, quantity } = payload
+  let { product_id, cart_id, quantity = 1 } = payload
 
   // Check JSON validation schema
   let validation = validateLineItemCreate(payload)
@@ -71,13 +71,18 @@ LineItem.update = async (id, payload) => {
     if (!cart) return Promise.reject('no cart found')
   }
   
-  Line_Items
-  
   Line_Items[lineIndex].product_id = product_id || Line_Items[lineIndex].product_id
   Line_Items[lineIndex].cart_id = cart_id || Line_Items[lineIndex].cart_id
   Line_Items[lineIndex].quantity = quantity || Line_Items[lineIndex].quantity
 
   return Promise.resolve(Line_Items[lineIndex])
+}
+
+
+LineItem.destroy = (id) => {
+  Line_Items = Line_Items.filter(el => el.id !== id)
+  console.log('banana', Line_Items)
+  return Promise.resolve(Line_Items)
 }
 
 
@@ -111,4 +116,4 @@ let test = async () => {
   Line_Items
 }
 
-test()
+// test()

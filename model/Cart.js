@@ -17,8 +17,16 @@ Cart.create = async () => {
   return Promise.resolve(result)
 }
 
-Cart.find = () => {
-  return Promise.resolve(Carts)
+Cart.find = async () => {
+  let LineItems = await LineItem.find()
+  let carts = Carts.map(el => {
+    let lineItems = LineItems.filter(el => el.cart_id === el.id)
+    return {
+      ...el,
+      lineItems
+    }
+  })
+  return Promise.resolve(carts)
 }
 
 Cart.findById = async (id) => {
@@ -36,29 +44,30 @@ Cart.findById = async (id) => {
   
   return Promise.resolve(cartWithLineItems)
 }
+let z = Cart.findById(1)
+z
 
 
+// Cart.create()
+//   .then(data => {
+//     data
+//   })
+//   .catch(err => {
+//     err
+//   })
 
-Cart.create()
-  .then(data => {
-    data
-  })
-  .catch(err => {
-    err
-  })
+// let payload = {
+//   quantity: 2,
+//   product_id: 1,
+//   cart_id: 2
+// }
 
-let payload = {
-  quantity: 2,
-  product_id: 1,
-  cart_id: 2
-}
+// LineItem.create(payload)
+//   .then(data => {
+//     data
+//   })
 
-LineItem.create(payload)
-  .then(data => {
-    data
-  })
-
-Cart.findById(2)
-  .then(data => {
-    data
-  })
+// Cart.findById(2)
+//   .then(data => {
+//     data
+//   })
