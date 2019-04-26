@@ -33,7 +33,6 @@ webserver // Web interface
 util // Shared util helpers
   L wrapper.js // wrap async await functions to fail safely
 ```
-
 ### TODO:
 - [x] Architecture
 - [x] Model validation with JOI
@@ -42,7 +41,7 @@ util // Shared util helpers
 - [x] Carts CRUD
 - [x] Web interface - Products Index
 - [x] Web interface - Cart (add and remove items)
-- [ ] Web sessions for Cart
+- [x] Web sessions for Cart
 - [ ] Orders CRUD
 - [ ] Web interface - Orders checkout
 
