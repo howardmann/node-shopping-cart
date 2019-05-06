@@ -17,6 +17,7 @@ router
   .get('/carts/', carts.show)
   .post('/carts/add/:product_id', carts.addToBasket)
   .post('/carts/deduct/:product_id', carts.deductItem)
+  .delete('/carts/', carts.destroy)
 
 module.exports = router
 

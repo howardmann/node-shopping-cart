@@ -54,6 +54,12 @@ Carts.updateQuantity = async (payload) => {
   return await Promise.resolve(Cart.findById(cart_id))
 }
 
+Carts.destroy = () => {
+  return Cart.destroy()
+    .then(data => {
+      return data
+    })
+}
 let test = async () => {
   // Create new cart
   await Carts.create()

@@ -22,6 +22,12 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 app.set('views', './webserver/views');
 
+
+// method override to use DELETE in html forms
+const methodOverride = require('method-override')
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
+
 // Routes
 const routes = require('./routes')
 app.use(routes)

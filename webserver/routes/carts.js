@@ -39,3 +39,12 @@ CartsRoutes.deductItem = async (req, res, next) => {
     })
 }
 
+CartsRoutes.destroy = (req, res, next) => {
+  let cart_id = req.session.cart.id
+
+  carts.destroy(cart_id)
+    .then(data => {
+      req.session.cart = null
+      res.redirect('/')
+    })
+}

@@ -1,6 +1,6 @@
 let Cart = module.exports = {}
 
-const {
+let {
   Carts
 } = require('../db/DB')
 const LineItem = require('./LineItem.js')
@@ -47,8 +47,11 @@ Cart.findById = async (id) => {
   
   return Promise.resolve(cartWithLineItems)
 }
-let z = Cart.findById(1)
-z
+
+Cart.destroy = (id) => {
+  Carts = Carts.filter(el => el.id !== id)
+  return Promise.resolve(Carts)
+}
 
 
 // Cart.create()
