@@ -21,13 +21,16 @@ model // CRUD and validation to DB
   L validation // validate data before being written to DB (use JOI helper)
   LineItem.js // CRUD functions
   Product.js // CRUD functions
+  Order.js // CRUD functions
 
 controller // API between interface and model. Responsible for serialization and any other logic required that is not specifcally related to direct CRUD operations
   L serializers // serialize data appropriate for model
   products.js // product controller
+  carts.js // cart controller (add/ remove LineItems and update qty if product exists) <- most logic here
+  orders.js // order controller (update LineItems assoc from cart to order)
 
 webserver // Web interface
-  L routes // Express routes
+  L routes // Express routes (handles sessions whcih are webserver specific) controller has no logic of sessions
   server.js // Express application
 
 util // Shared util helpers
@@ -42,6 +45,6 @@ util // Shared util helpers
 - [x] Web interface - Products Index
 - [x] Web interface - Cart (add and remove items)
 - [x] Web sessions for Cart
-- [ ] Orders CRUD
-- [ ] Web interface - Orders checkout
+- [x] Orders CRUD
+- [x] Web interface - Orders checkout
 
