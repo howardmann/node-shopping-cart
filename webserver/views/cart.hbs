@@ -21,3 +21,15 @@
 <form action="/carts?_method=DELETE" method="POST">
   <input type="submit" value="Empty Cart"></input>
 </form>
+
+<hr>
+
+<h2>Order Checkout</h2>
+<form action="/orders" method="POST">
+  <input type="hidden" name="cart_id" value="{{data.id}}">
+
+  <label for="customer_name">Enter name:</label>
+  <input id="customer_name" type="text" name="customer_name"></input>
+  <br>
+  <input type="submit" value="CHECK OUT"></input>
+</form>

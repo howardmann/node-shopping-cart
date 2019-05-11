@@ -1,6 +1,10 @@
 const express = require('express')
 const session = require('express-session')
+const bodyParser = require('body-parser')
 const app = express()
+
+// Receive html form payload via req.body
+app.use(bodyParser())
 
 // Express sessions
 app.use(session({
@@ -10,6 +14,7 @@ app.use(session({
 // Access sessions in all templates
 app.use(function (req, res, next) {
   res.locals.cart = req.session.cart; // This is the important line
+  res.locals.order = req.session.order; // This is the important line
   next();
 });
 

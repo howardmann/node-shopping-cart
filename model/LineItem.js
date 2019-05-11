@@ -54,7 +54,7 @@ LineItem.findById = async (id) => {
 
 
 LineItem.update = async (id, payload) => {
-  let { product_id, cart_id, quantity } = payload
+  let { product_id, cart_id, quantity, order_id } = payload
   
   // Find lineitem and its index position in DB
   const lineItem = await Promise.resolve(Line_Items.find(el => el.id === id))
@@ -78,8 +78,9 @@ LineItem.update = async (id, payload) => {
   }
   
   Line_Items[lineIndex].product_id = product_id || Line_Items[lineIndex].product_id
-  Line_Items[lineIndex].cart_id = cart_id || Line_Items[lineIndex].cart_id
+  Line_Items[lineIndex].cart_id = (cart_id !== undefined) ? cart_id : Line_Items[lineIndex].cart_id
   Line_Items[lineIndex].quantity = quantity || Line_Items[lineIndex].quantity
+  Line_Items[lineIndex].order_id = order_id || Line_Items[lineIndex].order_id
 
   return Promise.resolve(Line_Items[lineIndex])
 }

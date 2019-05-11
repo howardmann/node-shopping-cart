@@ -6,8 +6,7 @@ let {
 const LineItem = require('./LineItem.js')
 
 Cart.create = async () => {
-  // Create new Product and return from DB
-  let cartId = Carts[Carts.length - 1].id
+  let cartId = (Carts.length > 0) ? Carts[Carts.length - 1].id : 0
   let newId = cartId += 1
   let newCart = {
     id: newId,
@@ -49,10 +48,19 @@ Cart.findById = async (id) => {
 }
 
 Cart.destroy = (id) => {
+  // Fetch cart
+  let cart = Carts.find(el => el.id === id)
+  if (!cart) return Promise.reject('no cart found')
+
   Carts = Carts.filter(el => el.id !== id)
   return Promise.resolve(Carts)
 }
 
+// Carts
+// Cart.destroy(1).then(el => {
+//   el
+//   Carts
+// })
 
 // Cart.create()
 //   .then(data => {
@@ -73,7 +81,7 @@ Cart.destroy = (id) => {
 //     data
 //   })
 
-// Cart.findById(2)
+// Cart.findById(1)
 //   .then(data => {
-//     data
+//     data.lineItems[0] //?
 //   })

@@ -12,6 +12,12 @@ Carts.create = () => {
     })
 }
 
+Carts.find = () => {
+  return Cart.find().then(data => {
+    return data
+  })
+}
+
 Carts.findById = (id) => {
   return Cart.findById(id).then(data => {
     // Find associated lineItem product names
@@ -54,24 +60,25 @@ Carts.updateQuantity = async (payload) => {
   return await Promise.resolve(Cart.findById(cart_id))
 }
 
-Carts.destroy = () => {
-  return Cart.destroy()
+Carts.destroy = (id) => {
+  return Cart.destroy(id)
     .then(data => {
       return data
     })
 }
-let test = async () => {
-  // Create new cart
-  await Carts.create()
-  // Add items
-  await Carts.updateQuantity({product_id: 3, cart_id: 2, action: "ADD"})
-  await Carts.updateQuantity({product_id: 3, cart_id: 2, action: "ADD"})
-  // await Carts.updateQuantity({product_id: 3, cart_id: 2, action: "ADD"})
-  let {error, data } = await wrapper(Carts.updateQuantity({product_id: 3,cart_id: 2, action: "DEDUCT"}))
-  error
-  data //?
-  let carts = await Cart.find() //?
 
-}
+// let test = async () => {
+//   // Create new cart
+//   await Carts.create()
+//   // Add items
+//   await Carts.updateQuantity({product_id: 3, cart_id: 2, action: "ADD"})
+//   await Carts.updateQuantity({product_id: 3, cart_id: 2, action: "ADD"})
+//   // await Carts.updateQuantity({product_id: 3, cart_id: 2, action: "ADD"})
+//   let {error, data } = await wrapper(Carts.updateQuantity({product_id: 3,cart_id: 2, action: "DEDUCT"}))
+//   error
+//   data //?
+//   let carts = await Cart.find() //?
 
-test()
+// }
+
+// test()
