@@ -19,8 +19,5 @@
     "joi": "^14.3.1",
     "marked": "^0.6.2",
     "method-override": "^3.0.0"
-  },
-  "now": {
-    "alias": "node-shopping-cart"
   }
 }

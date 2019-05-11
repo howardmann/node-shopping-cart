@@ -7,6 +7,8 @@ A user should be able to:
 - add and remove product items from the cart
 - checkout the cart and add order details
 
+[Live demo here ](https://node-shopping-cart.now.sh/)
+
 A simple relational database model could be as follows:
 
 ![shopping cart DB entity](./img/Shopping_Cart.png)
